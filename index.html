@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>EarningsFingerprint Insurance</title>
+
+    <!-- React -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background: linear-gradient(to right, #eef2ff, #f8fafc);
+        }
+
+        .container {
+            max-width: 750px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: #1e3a8a;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 22px;
+            margin-bottom: 18px;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 16px;
+            margin: 6px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(to right, #2563eb, #3b82f6);
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .alert {
+            color: #dc2626;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .payout {
+            background: #ecfdf5;
+            color: #166534;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .small {
+            font-size: 13px;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function App() {
+            const [income] = React.useState(100);
+            const [hours, setHours] = React.useState(0);
+            const [payout, setPayout] = React.useState(null);
+            const [trigger, setTrigger] = React.useState("");
+
+            const simulate = (type, h) => {
+                setTrigger(type);
+                setHours(h);
+                setPayout(income * h);
+            };
+
+            return (
+                <div className="container">
+
+                    <div className="header">
+                        <h1>EarningsFingerprint Insurance</h1>
+                        <p>Personalized income protection for gig workers</p>
+
+                        <p className="highlight">
+                            Not fixed payouts — we calculate your exact income loss
+                        </p>
+
+                        <div className="badge">EarningsFingerprint Active</div>
+                    </div>
+
+                    <div className="card">
+                        <h2>Worker Profile</h2>
+                        <p><b>Name:</b> Ravi Kumar</p>
+                        <p><b>Role:</b> Delivery Partner (Zepto)</p>
+                        <p><b>Avg Daily Income:</b> ₹800</p>
+                        <p><b>Avg Hourly Income:</b> ₹{income}</p>
+                    </div>
+
+                    <div className="card">
+                        <h2>Trigger Simulation</h2>
+
+                        <button onClick={() => simulate("Rain", 4)}>Simulate Rain</button>
+                        <button onClick={() => simulate("Heat", 3)}>Simulate Heat</button>
+                        <button onClick={() => simulate("AQI", 2)}>Simulate AQI</button>
+                        <button onClick={() => simulate("Downtime", 5)}>Platform Downtime</button>
+
+                        {trigger && (
+                            <div className="alert">
+                                {trigger} disruption detected → {hours} hours income loss
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="card">
+                        <h2>Payout</h2>
+
+                        {payout && (
+                            <>
+                                <div className="payout">
+                                    ₹{payout} credited instantly
+                                </div>
+
+                                <p className="small">
+                                    This payout is calculated based on your EarningsFingerprint (your actual earning pattern), not a fixed amount.
+                                </p>
+
+                                <div className="divider"></div>
+
+                                <p className="small">
+                                    Example: A worker earning ₹150/hour would receive ₹{hours * 150} for the same disruption.
+                                </p>
+                            </>
+                        )}
+                    </div>
+
+                    <div className="card">
+                        <h2>Real Scenario</h2>
+                        <p>
+                            Ravi earns around ₹800 per day. During heavy rain, he loses 4 hours of work and misses around ₹400.
+                            Our system automatically detects this disruption and compensates him instantly.
+                        </p>
+                    </div>
+
+                    <div className="card">
+                        <h2>Why this is different</h2>
+                        <p>
+                            Traditional insurance systems give the same payout to everyone.
+                            Our system calculates the exact income loss for each worker based on their earnings.
+                        </p>
+                    </div>
+
+                    <div className="card">
+                        <h2>How it works</h2>
+                        <p>
+                            We analyze past earnings to build your EarningsFingerprint.
+                            When a disruption occurs, we automatically calculate your income loss and compensate instantly.
+                            No claims, no paperwork.
+                        </p>
+
+                        <p className="small">
+                            In future, this system can integrate real-time APIs and worker data to automate payouts at scale.
+                        </p>
+                    </div>
+
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+</body>
+
+</html>
